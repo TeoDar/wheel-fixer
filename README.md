@@ -1,13 +1,18 @@
 # 🚲 Wheel Fixer
 
-🌐 **Онлайн-версия:** https://teodar.github.io/wheel-fixer/
+🌐 **Онлайн-версия / Live:** https://teodar.github.io/wheel-fixer/ · [English version](https://teodar.github.io/wheel-fixer/en/)
 
-Веб-калькулятор для правки велосипедного колеса («восьмёрка», яйцевидность).
-Отмечаете на схеме колеса, где обод выпирает, — а он говорит, **какие спицы
-натянуть, а какие ослабить** и примерно на сколько.
+**RU.** Веб-калькулятор для правки велосипедного колеса («восьмёрка», яйцевидность):
+отмечаете на схеме, где обод выпирает, — и получаете список, **какие спицы натянуть,
+а какие ослабить** и примерно на сколько.
 
-Это одностраничник на чистом HTML/CSS/JS: без сборки, без зависимостей.
-Открывается двойным кликом по `index.html`.
+**EN.** A free bicycle wheel truing calculator: mark the lateral/radial rim runout
+(the “8”, a wobble) and get a spoke-by-spoke plan — **which spokes to tighten and
+which to loosen**, and by how much.
+
+Чистый HTML/CSS/JS: без сборки, без зависимостей. `index.html` — русская версия,
+`en/index.html` — английская; общие `styles.css` и `app.js`. Открывается двойным
+кликом по `index.html`.
 
 ## Возможности
 

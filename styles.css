@@ -1,0 +1,197 @@
+:root{
+    --bg:#f6f8fb; --panel:#ffffff; --border:#e2e8f0; --line:#eef2f7;
+    --text:#0f172a; --muted:#64748b; --accent:#2563eb; --accent-soft:#eff6ff;
+    --latR:#ef4444; --latL:#3b82f6; --radO:#f59e0b; --radI:#8b5cf6;
+    --tight:#16a34a; --tight-soft:#dcfce7; --loose:#ea580c; --loose-soft:#ffedd5;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.45;
+  }
+  header{
+    padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--border);
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  }
+  header h1{font-size:18px; margin:0; letter-spacing:-0.2px}
+  header .sub{color:var(--muted); font-size:13px}
+  header .sub a{color:var(--accent); text-decoration:none}
+  header .lang{margin-left:auto; font-size:13px; font-weight:700; color:var(--accent); text-decoration:none; border:1px solid var(--border); border-radius:8px; padding:4px 10px; white-space:nowrap}
+  header .lang:hover{background:var(--accent-soft)}
+  .intro{margin:0; font-size:13.5px; color:#334155; max-width:1000px}
+
+  main{
+    max-width:1440px; margin:0 auto; padding:18px;
+    display:grid; grid-template-columns:1fr; gap:18px; align-items:start;
+  }
+  @media (min-width:900px){
+    main{grid-template-columns:minmax(280px,1fr) minmax(320px,1fr)}
+    .wheel-card{grid-column:1}
+    .controls-col{grid-column:2}
+    .results-card{grid-column:1 / -1}
+  }
+  @media (min-width:1150px){
+    main{grid-template-columns:minmax(300px,1.05fr) minmax(300px,0.95fr) minmax(320px,1fr)}
+    .results-card{grid-column:3}
+  }
+
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:15px; box-shadow:0 1px 2px rgba(15,23,42,.04);
+  }
+  .results-card{display:flex; flex-direction:column}
+  .controls-col{display:flex; flex-direction:column; gap:18px}
+  .mshort{display:none}
+
+  /* сегментированный переключатель «силы» отметки */
+  .seg{display:inline-flex; align-items:stretch; border:1px solid var(--border); border-radius:9px; overflow:hidden; background:#fff}
+  .seg-label{display:flex; align-items:center; padding:0 9px; font-size:12px; font-weight:600; color:var(--muted)}
+  .seg-btn{font:inherit; font-size:13px; font-weight:700; border:0; border-left:1px solid var(--border); background:#fff; color:var(--text); padding:7px 12px; cursor:pointer}
+  .seg-btn:hover{background:#f8fafc}
+  .seg-btn.active{background:var(--accent); color:#fff}
+
+  /* заголовок результатов (на мобильном — раскрывающийся) */
+  .results-head{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .results-head h2{margin:0}
+  .res-toggle{
+    display:none; align-items:center; justify-content:center; width:30px; height:30px;
+    border-radius:8px; border:1px solid var(--border); background:#fff; color:var(--muted);
+    font-size:13px; cursor:pointer; transition:transform .15s;
+  }
+  h2{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 10px}
+
+  /* ---------- wheel ---------- */
+  .wheel-card{display:flex; flex-direction:column; gap:12px}
+  #wheel{
+    width:100%; height:auto; display:block; touch-action:none; cursor:crosshair;
+    user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;
+    background:radial-gradient(circle at 50% 42%, #ffffff 0%, #f8fafc 70%, #f1f5f9 100%);
+    border-radius:12px;
+  }
+  .legend{display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; font-size:12px; color:var(--muted)}
+  .legend .item{display:flex; align-items:center; gap:7px}
+  .sw{width:14px; height:14px; border-radius:4px; flex:0 0 auto; border:1px solid rgba(15,23,42,.08)}
+  .sw.red{background:rgba(239,68,68,.7)} .sw.blue{background:rgba(59,130,246,.7)}
+  .sw.amber{background:rgba(245,158,11,.75)} .sw.violet{background:rgba(139,92,246,.7)}
+  .sw.L{background:#9db8d6} .sw.R{background:#d8b79a}
+  .legend .badge{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-weight:700;font-size:11px}
+  .badge.t{background:var(--tight-soft);color:var(--tight);border:1px solid var(--tight)}
+  .badge.l{background:var(--loose-soft);color:var(--loose);border:1px solid var(--loose)}
+
+  /* блок «Как пользоваться» — на всю ширину */
+  .span-all{grid-column:1 / -1}
+
+  /* таблица результатов: ограниченная высота + внутренний скролл */
+  .table-wrap{max-height:min(58vh,560px); overflow:auto; margin:0 -2px}
+  .table-wrap table thead th{
+    position:sticky; top:0; z-index:1; background:var(--panel);
+    box-shadow:0 1px 0 var(--border);
+  }
+
+  /* ---------- controls ---------- */
+  .row{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:12px}
+  .row:last-child{margin-bottom:0}
+  label{display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--muted); font-weight:600}
+  select{font:inherit}
+  select{
+    padding:7px 9px; border:1px solid var(--border); border-radius:9px; background:#fff; color:var(--text);
+    font-size:14px; min-width:120px;
+  }
+
+  .modes{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px}
+  .mode{
+    font:inherit; font-size:13px; font-weight:600; padding:9px 10px; cursor:pointer;
+    border:1px solid var(--border); background:#fff; color:var(--text); border-radius:10px;
+    display:flex; align-items:center; gap:8px; transition:.12s; text-align:left;
+  }
+  .mode:hover{border-color:#cbd5e1; background:#fafbfc}
+  .mode .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  .mode[data-mode=latR] .dot{background:var(--latR)}
+  .mode[data-mode=latL] .dot{background:var(--latL)}
+  .mode[data-mode=radO] .dot{background:var(--radO)}
+  .mode[data-mode=radI] .dot{background:var(--radI)}
+  .mode[data-mode=erase] .dot{background:#94a3b8}
+  .mode.active{border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 1px var(--accent) inset}
+  .mode.erase{grid-column:span 2; justify-content:center}
+
+  button.btn{
+    font:inherit; font-size:13px; font-weight:600; padding:8px 12px; cursor:pointer;
+    border:1px solid var(--border); background:#fff; color:var(--text); border-radius:9px; transition:.12s;
+  }
+  button.btn:hover{background:#f8fafc; border-color:#cbd5e1}
+  button.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  button.btn.primary:hover{background:#1d4ed8}
+  .chk{flex-direction:row; align-items:center; gap:6px; font-weight:600; color:var(--muted); cursor:pointer; margin-left:auto}
+  .chk input{accent-color:var(--accent); width:15px; height:15px}
+
+  /* ---------- results ---------- */
+  .summary{font-size:14px; margin-bottom:12px; color:var(--text)}
+  .summary b.tight{color:var(--tight)} .summary b.loose{color:var(--loose)}
+  .muted{color:var(--muted)}
+  table{width:100%; border-collapse:collapse; font-size:14px}
+  th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); padding:6px 8px; border-bottom:1px solid var(--border)}
+  td{padding:7px 8px; border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  td:first-child{font-variant-numeric:tabular-nums; font-weight:700}
+  .tag{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;font-size:12px;font-weight:700}
+  .tag.L{background:#e8f0fb;color:#2563eb} .tag.R{background:#fbeede;color:#b45309}
+  .act{font-weight:600}
+  .act.tight{color:var(--tight)} .act.loose{color:var(--loose)}
+  .note{font-size:12px; color:var(--muted); margin-top:12px; padding-top:10px; border-top:1px dashed var(--border)}
+
+  details.howto summary{cursor:pointer; font-weight:700; font-size:14px; color:var(--text); list-style:none}
+  details.howto summary::-webkit-details-marker{display:none}
+  details.howto summary::before{content:"▸ "; color:var(--muted)}
+  details.howto[open] summary::before{content:"▾ "}
+  details.howto .body{margin-top:12px; font-size:13px; color:#334155; display:flex; flex-direction:column; gap:10px}
+  details.howto ol{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px}
+  /* на широком экране методика раскладывается в две колонки */
+  @media (min-width:881px){
+    details.howto .body{display:grid; grid-template-columns:1.15fr 1fr; gap:8px 30px; align-items:start}
+    details.howto .body > ol{grid-row:span 3}
+  }
+  details.howto code{background:#f1f5f9; padding:1px 5px; border-radius:5px; font-size:12px}
+  .callout{background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:9px 11px; font-size:12.5px}
+
+  /* ---------- компактный режим для телефона ---------- */
+  @media (max-width:720px){
+    main{padding:10px; padding-bottom:160px; gap:12px}
+    header{padding:12px 14px}
+    header h1{font-size:16px}
+    header .sub{display:none}
+    .card{padding:12px; border-radius:12px}
+    .wheel-card{padding:6px}
+    .legend{font-size:10.5px; gap:5px 10px}
+    .table-wrap{max-height:52vh}
+
+    /* результаты сворачиваются в аккордеон */
+    .res-toggle{display:inline-flex}
+    .results-card .res-body{display:none}
+    .results-card.open .res-body{display:block}
+    .results-card.open .res-toggle{transform:rotate(180deg)}
+
+    /* панель инструментов прижата к низу */
+    .toolbar-card{
+      position:fixed; left:0; right:0; bottom:0; z-index:60; margin:0;
+      border-left:0; border-right:0; border-bottom:0;
+      border-radius:14px 14px 0 0;
+      padding:9px 10px calc(9px + env(safe-area-inset-bottom, 0px));
+      box-shadow:0 -6px 24px rgba(15,23,42,.16);
+    }
+    .toolbar-card h2{display:none}
+    .toolbar-card .modes{grid-template-columns:repeat(5, minmax(0,1fr)); gap:6px; margin-bottom:8px}
+    .toolbar-card .mode{
+      flex-direction:column; gap:2px; padding:8px 2px; font-size:10.5px;
+      justify-content:center; text-align:center; line-height:1.15;
+    }
+    .toolbar-card .mode .mlong{display:none}
+    .toolbar-card .mode .mshort{display:inline}
+    .toolbar-card .mode.erase{grid-column:auto}
+    .toolbar-row{gap:8px; margin-bottom:0; flex-wrap:nowrap}
+    .toolbar-row .btn{padding:8px 10px; font-size:12px; flex:0 0 auto}
+    .seg{flex:1 1 auto; min-width:0}
+    .seg-btn{flex:1 1 0; padding:7px 0}
+  }

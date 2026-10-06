@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://teodar.github.io/wheel-fixer/sitemap.xml

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Free bicycle wheel truing calculator. Mark lateral rim runout (a wobble, or &#8220;8&#8221;) and get a spoke-by-spoke plan: which spokes to tighten and which to loosen." />
+<link rel="canonical" href="https://teodar.github.io/wheel-fixer/en/" />
+<link rel="alternate" hreflang="ru" href="https://teodar.github.io/wheel-fixer/" />
+<link rel="alternate" hreflang="en" href="https://teodar.github.io/wheel-fixer/en/" />
+<link rel="alternate" hreflang="x-default" href="https://teodar.github.io/wheel-fixer/" />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#2563eb" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Wheel Fixer" />
+<meta property="og:title" content="Bicycle Wheel Truing Calculator — Wheel Fixer" />
+<meta property="og:description" content="Mark the wobble on the wheel diagram — the calculator shows which spokes to tighten and which to loosen." />
+<meta property="og:url" content="https://teodar.github.io/wheel-fixer/en/" />
+<meta property="og:image" content="https://teodar.github.io/wheel-fixer/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="ru_RU" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Bicycle Wheel Truing Calculator — Wheel Fixer" />
+<meta name="twitter:description" content="Mark the wobble on the wheel diagram — the calculator shows which spokes to tighten and which to loosen." />
+<meta name="twitter:image" content="https://teodar.github.io/wheel-fixer/og.png" />
+<link rel="stylesheet" href="../styles.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Wheel Fixer","alternateName":"Bicycle Wheel Truing Calculator","url":"https://teodar.github.io/wheel-fixer/en/","applicationCategory":"UtilityApplication","operatingSystem":"Any (modern web browser)","browserRequirements":"Requires JavaScript","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Free web calculator for truing a bicycle wheel: mark lateral and radial rim runout and get a list of the spokes to tighten or loosen."}
+</script>
+<title>Bicycle Wheel Truing Calculator — Wheel Fixer</title>
+</head>
+<body>
+<header>
+  <h1>🚲 Wheel Fixer</h1>
+  <span class="sub">Mark the runout areas — the calculator tells you which spokes to tighten and which to loosen</span>
+    <a class="lang" href="../" hreflang="ru" title="Русская версия">RU</a>
+</header>
+
+<main>
+    <p class="intro span-all">Free bicycle wheel truing calculator: mark where the rim has moved sideways or bulges outwards, and get a spoke-by-spoke plan — which spokes to tighten and which to loosen.</p>
+  <details class="card howto span-all">
+    <summary>How to use / method</summary>
+      <div class="body">
+        <ol>
+          <li>Fix the wheel in a truing stand or in an upside-down frame.</li>
+          <li>The drive side (freewheel / cassette) is the <b>right side (R)</b>. Spokes going to the right hub flange are marked R, to the left — L.</li>
+          <li>Line up the top of the diagram with <b>spoke #1</b>: find it on the wheel and agree that it sits at 12 o'clock. Numbering goes clockwise.</li>
+          <li>Find the runout areas with chalk or a gauge. Click the matching segment on the diagram (you can drag to mark several in a row):
+            <br>&bull; <span style="color:#ef4444;font-weight:700">red</span> — bulges right; <span style="color:#3b82f6;font-weight:700">blue</span> — bulges left (this is the wobble, or &#8220;8&#8221;);
+            <br>&bull; <span style="color:#f59e0b;font-weight:700">orange</span> — bump outwards; <span style="color:#8b5cf6;font-weight:700">purple</span> — dent inwards (radial runout).</li>
+          <li>Use the &#8220;What to do&#8221; table: for every spoke it shows tighten (+) or loosen (&minus;) and by how much.</li>
+          <li>Turn the nipples, check the wheel again and repeat the marking. Two or three passes are usually enough.</li>
+        </ol>
+        <div class="callout">
+          <b>The wobble rule in plain words:</b> where the rim has moved to the right, tighten the left spoke and loosen the right one (and vice versa). The calculator finds the right spokes on both sides of the marked gap.
+        </div>
+        <div>
+          <b>About the turns:</b> &#8220;tighten&#8221; means clockwise when you look at the nipple from the rim side (normal right-hand thread). The exact number of turns depends on the wheel, so the values are a guide — start small and keep an eye on spoke tension (the &#8220;ping&#8221;).
+        </div>
+        <div>
+          <b>Caveats:</b> the model assumes the spokes alternate L/R (a standard build). If your wheel is unusual (2:1, radial lacing, etc.), treat the result as a hint about the direction only.
+        </div>
+      </div>
+  </details>
+
+  <section class="card wheel-card">
+    <svg id="wheel" viewBox="-128 -128 256 256" role="img" aria-label="Wheel diagram. Click the segments to mark the runout areas."></svg>
+    <div class="legend">
+      <span class="item"><span class="sw red"></span>bulges right (toward R flange)</span>
+      <span class="item"><span class="sw blue"></span>bulges left (toward L flange)</span>
+      <span class="item"><span class="sw amber"></span>bump outwards (radial)</span>
+      <span class="item"><span class="sw violet"></span>dent inwards</span>
+      <span class="item"><span class="sw L"></span>spoke on the left flange (L)</span>
+      <span class="item"><span class="sw R"></span>spoke on the right flange (R)</span>
+      <span class="item"><span class="badge t">+</span>tighten the nipple</span>
+      <span class="item"><span class="badge l">&minus;</span>loosen the nipple</span>
+    </div>
+  </section>
+
+  <div class="controls-col">
+    <section class="card settings-card">
+      <h2>Settings</h2>
+      <div class="row">
+        <label>Spoke count
+          <select id="nSel"></select>
+        </label>
+        <label>Spoke #1 goes to…
+          <select id="sideSel">
+            <option value="L">Left flange (L)</option>
+            <option value="R">Right flange (R)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Max. turn
+          <select id="turnSel">
+            <option value="0.25">1/4 turn</option>
+            <option value="0.5" selected>1/2 turn</option>
+            <option value="0.75">3/4 turn</option>
+            <option value="1">1 turn</option>
+          </select>
+        </label>
+        <button class="btn" id="exampleBtn">Example: a wobble</button>
+        <label class="chk"><input type="checkbox" id="numChk" checked /> Spoke numbers</label>
+      </div>
+    </section>
+
+    <section class="card toolbar-card">
+      <h2>Marking</h2>
+      <div class="modes" id="modes">
+        <button class="mode active" data-mode="latR" title="Bulges right (toward the R flange)"><span class="dot"></span><span class="mlong">Bulges right →</span><span class="mshort">→ right</span></button>
+        <button class="mode" data-mode="latL" title="Bulges left (toward the L flange)"><span class="dot"></span><span class="mlong">← Bulges left</span><span class="mshort">← left</span></button>
+        <button class="mode" data-mode="radO" title="Bump outwards (radial)"><span class="dot"></span><span class="mlong">Bump outwards</span><span class="mshort">bump</span></button>
+        <button class="mode" data-mode="radI" title="Dent inwards"><span class="dot"></span><span class="mlong">Dent inwards</span><span class="mshort">dent</span></button>
+        <button class="mode erase" data-mode="erase" title="Erase the mark"><span class="dot"></span><span class="mlong">Erase mark</span><span class="mshort">erase</span></button>
+      </div>
+
+      <div class="row toolbar-row">
+        <div class="seg" id="segStr" role="group" aria-label="Mark strength">
+          <span class="seg-label">Strength</span>
+          <button type="button" class="seg-btn" data-val="1">1</button>
+          <button type="button" class="seg-btn active" data-val="2">2</button>
+          <button type="button" class="seg-btn" data-val="3">3</button>
+        </div>
+        <button class="btn" id="undoBtn">Undo</button>
+        <button class="btn" id="clearBtn">Clear</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="card results-card" id="resultsCard">
+      <div class="results-head">
+        <h2>What to do</h2>
+        <button type="button" class="res-toggle" id="resToggle" aria-expanded="false" aria-controls="resBody" title="Show/hide">▾</button>
+      </div>
+      <div id="summary" class="summary"></div>
+      <div class="res-body" id="resBody">
+        <div class="table-wrap">
+          <table id="resTable">
+            <thead><tr><th>Spoke</th><th>Side</th><th>Action</th><th>Turn</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="note">Values are approximate: adjust in small steps (1/4–1/2 turn), then measure again and repeat. Keep the tension reasonable — never loosen spokes until they rattle.</div>
+      </div>
+  </section>
+</main>
+
+<script src="../app.js"></script>
+</body>
+</html>
