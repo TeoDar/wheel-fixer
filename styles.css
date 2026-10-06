@@ -22,6 +22,11 @@
   header .lang{margin-left:auto; font-size:13px; font-weight:700; color:var(--accent); text-decoration:none; border:1px solid var(--border); border-radius:8px; padding:4px 10px; white-space:nowrap}
   header .lang:hover{background:var(--accent-soft)}
   .intro{margin:0; font-size:13.5px; color:#334155; max-width:1000px}
+  .spoke-hint{margin:10px 0 0; display:flex; flex-direction:column; gap:8px; align-items:flex-start}
+  .spoke-hint img{width:100%; max-width:560px; height:auto; background:#fff; border-radius:10px}
+  .spoke-hint figcaption{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12.5px; font-weight:700}
+  .spoke-hint .c-tight{color:var(--tight)}
+  .spoke-hint .c-loose{color:var(--loose)}
 
   main{
     max-width:1440px; margin:0 auto; padding:18px;
