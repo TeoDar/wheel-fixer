@@ -67,3 +67,5 @@ min ‖A·t − b‖² + λ‖t‖²
 ## Лицензия
 
 MIT — см. [LICENSE](LICENSE).
+
+Иконка велосипеда — [Twemoji](https://github.com/twitter/twemoji) (Twitter, Inc. и участники), лицензия [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
