@@ -35,7 +35,7 @@
   @media (min-width:900px){
     main{grid-template-columns:minmax(280px,1fr) minmax(320px,1fr)}
     .wheel-card{grid-column:1}
-    .controls-card{grid-column:2}
+    .controls-col{grid-column:2}
     .results-card{grid-column:1 / -1}
   }
   @media (min-width:1150px){
@@ -48,6 +48,24 @@
     padding:15px; box-shadow:0 1px 2px rgba(15,23,42,.04);
   }
   .results-card{display:flex; flex-direction:column}
+  .controls-col{display:flex; flex-direction:column; gap:18px}
+  .mshort{display:none}
+
+  /* сегментированный переключатель «силы» отметки */
+  .seg{display:inline-flex; align-items:stretch; border:1px solid var(--border); border-radius:9px; overflow:hidden; background:#fff}
+  .seg-label{display:flex; align-items:center; padding:0 9px; font-size:12px; font-weight:600; color:var(--muted)}
+  .seg-btn{font:inherit; font-size:13px; font-weight:700; border:0; border-left:1px solid var(--border); background:#fff; color:var(--text); padding:7px 12px; cursor:pointer}
+  .seg-btn:hover{background:#f8fafc}
+  .seg-btn.active{background:var(--accent); color:#fff}
+
+  /* заголовок результатов (на мобильном — раскрывающийся) */
+  .results-head{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .results-head h2{margin:0}
+  .res-toggle{
+    display:none; align-items:center; justify-content:center; width:30px; height:30px;
+    border-radius:8px; border:1px solid var(--border); background:#fff; color:var(--muted);
+    font-size:13px; cursor:pointer; transition:transform .15s;
+  }
   h2{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 10px}
 
   /* ---------- wheel ---------- */
@@ -82,14 +100,11 @@
   .row{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:12px}
   .row:last-child{margin-bottom:0}
   label{display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--muted); font-weight:600}
-  label.grow{flex:1; min-width:150px}
-  select,input[type=range]{font:inherit}
+  select{font:inherit}
   select{
     padding:7px 9px; border:1px solid var(--border); border-radius:9px; background:#fff; color:var(--text);
     font-size:14px; min-width:120px;
   }
-  input[type=range]{width:100%; accent-color:var(--accent); height:22px}
-  b#strVal{color:var(--text)}
 
   .modes{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px}
   .mode{
@@ -107,7 +122,6 @@
   .mode.active{border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 1px var(--accent) inset}
   .mode.erase{grid-column:span 2; justify-content:center}
 
-  .actions{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
   button.btn{
     font:inherit; font-size:13px; font-weight:600; padding:8px 12px; cursor:pointer;
     border:1px solid var(--border); background:#fff; color:var(--text); border-radius:9px; transition:.12s;
@@ -146,6 +160,46 @@
   }
   details.howto code{background:#f1f5f9; padding:1px 5px; border-radius:5px; font-size:12px}
   .callout{background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:9px 11px; font-size:12.5px}
+
+  /* ---------- компактный режим для телефона ---------- */
+  @media (max-width:720px){
+    main{padding:10px; padding-bottom:160px; gap:12px}
+    header{padding:12px 14px}
+    header h1{font-size:16px}
+    header .sub{display:none}
+    .card{padding:12px; border-radius:12px}
+    .wheel-card{padding:6px}
+    .legend{font-size:10.5px; gap:5px 10px}
+    .table-wrap{max-height:52vh}
+
+    /* результаты сворачиваются в аккордеон */
+    .res-toggle{display:inline-flex}
+    .results-card .res-body{display:none}
+    .results-card.open .res-body{display:block}
+    .results-card.open .res-toggle{transform:rotate(180deg)}
+
+    /* панель инструментов прижата к низу */
+    .toolbar-card{
+      position:fixed; left:0; right:0; bottom:0; z-index:60; margin:0;
+      border-left:0; border-right:0; border-bottom:0;
+      border-radius:14px 14px 0 0;
+      padding:9px 10px calc(9px + env(safe-area-inset-bottom, 0px));
+      box-shadow:0 -6px 24px rgba(15,23,42,.16);
+    }
+    .toolbar-card h2{display:none}
+    .toolbar-card .modes{grid-template-columns:repeat(5, minmax(0,1fr)); gap:6px; margin-bottom:8px}
+    .toolbar-card .mode{
+      flex-direction:column; gap:2px; padding:8px 2px; font-size:10.5px;
+      justify-content:center; text-align:center; line-height:1.15;
+    }
+    .toolbar-card .mode .mlong{display:none}
+    .toolbar-card .mode .mshort{display:inline}
+    .toolbar-card .mode.erase{grid-column:auto}
+    .toolbar-row{gap:8px; margin-bottom:0; flex-wrap:nowrap}
+    .toolbar-row .btn{padding:8px 10px; font-size:12px; flex:0 0 auto}
+    .seg{flex:1 1 auto; min-width:0}
+    .seg-btn{flex:1 1 0; padding:7px 0}
+  }
 </style>
 </head>
 <body>
@@ -194,8 +248,9 @@
     </div>
   </section>
 
-  <section class="card controls-card">
-      <h2>Разметка</h2>
+  <div class="controls-col">
+    <section class="card settings-card">
+      <h2>Настройки</h2>
       <div class="row">
         <label>Количество спиц
           <select id="nSel"></select>
@@ -208,18 +263,7 @@
         </label>
       </div>
 
-      <div class="modes" id="modes">
-        <button class="mode active" data-mode="latR"><span class="dot"></span>Выпирает вправо →</button>
-        <button class="mode" data-mode="latL"><span class="dot"></span>← Выпирает влево</button>
-        <button class="mode" data-mode="radO"><span class="dot"></span>Горб наружу</button>
-        <button class="mode" data-mode="radI"><span class="dot"></span>Впадина внутрь</button>
-        <button class="mode erase" data-mode="erase"><span class="dot"></span>Стереть отметку</button>
-      </div>
-
       <div class="row">
-        <label class="grow">Сила отметки: <b id="strVal">2</b>
-          <input type="range" id="strSel" min="1" max="3" step="1" value="2" />
-        </label>
         <label>Макс. подкрутка
           <select id="turnSel">
             <option value="0.25">1/4 оборота</option>
@@ -228,26 +272,49 @@
             <option value="1">1 оборот</option>
           </select>
         </label>
-      </div>
-
-      <div class="actions">
         <button class="btn" id="exampleBtn">Пример «восьмёрка»</button>
-        <button class="btn" id="undoBtn">Отменить</button>
-        <button class="btn" id="clearBtn">Очистить</button>
         <label class="chk"><input type="checkbox" id="numChk" checked /> Номера спиц</label>
       </div>
-  </section>
+    </section>
 
-  <section class="card results-card">
-      <h2>Что делать</h2>
-      <div id="summary" class="summary"></div>
-      <div class="table-wrap">
-        <table id="resTable">
-          <thead><tr><th>Спица</th><th>Сторона</th><th>Действие</th><th>Оборот</th></tr></thead>
-          <tbody></tbody>
-        </table>
+    <section class="card toolbar-card">
+      <h2>Разметка</h2>
+      <div class="modes" id="modes">
+        <button class="mode active" data-mode="latR" title="Выпирает вправо (к R-фланцу)"><span class="dot"></span><span class="mlong">Выпирает вправо →</span><span class="mshort">→ вправо</span></button>
+        <button class="mode" data-mode="latL" title="Выпирает влево (к L-фланцу)"><span class="dot"></span><span class="mlong">← Выпирает влево</span><span class="mshort">← влево</span></button>
+        <button class="mode" data-mode="radO" title="Горб наружу (радиально)"><span class="dot"></span><span class="mlong">Горб наружу</span><span class="mshort">горб</span></button>
+        <button class="mode" data-mode="radI" title="Впадина внутрь"><span class="dot"></span><span class="mlong">Впадина внутрь</span><span class="mshort">впадина</span></button>
+        <button class="mode erase" data-mode="erase" title="Стереть отметку"><span class="dot"></span><span class="mlong">Стереть отметку</span><span class="mshort">стереть</span></button>
       </div>
-      <div class="note">Значения ориентировочные: правьте небольшими шагами (1/4–1/2 оборота), затем измеряйте заново и повторяйте. Держите натяжение в разумных пределах — не ослабляйте спицы до «болтания».</div>
+
+      <div class="row toolbar-row">
+        <div class="seg" id="segStr" role="group" aria-label="Сила отметки">
+          <span class="seg-label">Сила</span>
+          <button type="button" class="seg-btn" data-val="1">1</button>
+          <button type="button" class="seg-btn active" data-val="2">2</button>
+          <button type="button" class="seg-btn" data-val="3">3</button>
+        </div>
+        <button class="btn" id="undoBtn">Отменить</button>
+        <button class="btn" id="clearBtn">Очистить</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="card results-card" id="resultsCard">
+      <div class="results-head">
+        <h2>Что делать</h2>
+        <button type="button" class="res-toggle" id="resToggle" aria-expanded="false" aria-controls="resBody" title="Показать/скрыть">▾</button>
+      </div>
+      <div id="summary" class="summary"></div>
+      <div class="res-body" id="resBody">
+        <div class="table-wrap">
+          <table id="resTable">
+            <thead><tr><th>Спица</th><th>Сторона</th><th>Действие</th><th>Оборот</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="note">Значения ориентировочные: правьте небольшими шагами (1/4–1/2 оборота), затем измеряйте заново и повторяйте. Держите натяжение в разумных пределах — не ослабляйте спицы до «болтания».</div>
+      </div>
   </section>
 </main>
 
@@ -643,11 +710,21 @@
     });
   });
 
-  var strSel = document.getElementById('strSel');
-  var strVal = document.getElementById('strVal');
-  strSel.addEventListener('input', function () {
-    state.strength = parseInt(strSel.value, 10);
-    strVal.textContent = strSel.value;
+  var segStr = document.getElementById('segStr');
+  segStr.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.seg-btn') : null;
+    if (!b) return;
+    state.strength = parseInt(b.getAttribute('data-val'), 10);
+    Array.prototype.forEach.call(segStr.querySelectorAll('.seg-btn'), function (x) {
+      x.classList.toggle('active', x === b);
+    });
+  });
+
+  var resultsCard = document.getElementById('resultsCard');
+  var resToggle = document.getElementById('resToggle');
+  resToggle.addEventListener('click', function () {
+    var open = resultsCard.classList.toggle('open');
+    resToggle.setAttribute('aria-expanded', String(open));
   });
 
   var turnSel = document.getElementById('turnSel');
