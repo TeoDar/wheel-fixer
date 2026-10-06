@@ -29,17 +29,25 @@
   header .sub a{color:var(--accent); text-decoration:none}
 
   main{
-    max-width:1200px; margin:0 auto; padding:18px;
-    display:grid; grid-template-columns:minmax(300px,1fr) minmax(340px,1.05fr); gap:18px;
-    align-items:start;
+    max-width:1440px; margin:0 auto; padding:18px;
+    display:grid; grid-template-columns:1fr; gap:18px; align-items:start;
   }
-  @media (max-width:880px){ main{grid-template-columns:1fr} }
+  @media (min-width:900px){
+    main{grid-template-columns:minmax(280px,1fr) minmax(320px,1fr)}
+    .wheel-card{grid-column:1}
+    .controls-card{grid-column:2}
+    .results-card{grid-column:1 / -1}
+  }
+  @media (min-width:1150px){
+    main{grid-template-columns:minmax(300px,1.05fr) minmax(300px,0.95fr) minmax(320px,1fr)}
+    .results-card{grid-column:3}
+  }
 
-  .col{display:flex; flex-direction:column; gap:18px}
   .card{
     background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
     padding:15px; box-shadow:0 1px 2px rgba(15,23,42,.04);
   }
+  .results-card{display:flex; flex-direction:column}
   h2{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 10px}
 
   /* ---------- wheel ---------- */
@@ -60,12 +68,11 @@
   .badge.t{background:var(--tight-soft);color:var(--tight);border:1px solid var(--tight)}
   .badge.l{background:var(--loose-soft);color:var(--loose);border:1px solid var(--loose)}
 
-  /* колесо «прилипает», пока листаете результаты (только десктоп) */
-  @media (min-width:881px){ .wheel-card{position:sticky; top:18px} }
+  /* блок «Как пользоваться» — на всю ширину */
   .span-all{grid-column:1 / -1}
 
   /* таблица результатов: ограниченная высота + внутренний скролл */
-  .table-wrap{max-height:min(46vh,420px); overflow:auto; margin:0 -2px}
+  .table-wrap{max-height:min(58vh,560px); overflow:auto; margin:0 -2px}
   .table-wrap table thead th{
     position:sticky; top:0; z-index:1; background:var(--panel);
     box-shadow:0 1px 0 var(--border);
@@ -162,8 +169,7 @@
     </div>
   </section>
 
-  <aside class="col">
-    <div class="card">
+  <section class="card controls-card">
       <h2>Разметка</h2>
       <div class="row">
         <label>Количество спиц
@@ -205,9 +211,9 @@
         <button class="btn" id="clearBtn">Очистить</button>
         <label class="chk"><input type="checkbox" id="numChk" checked /> Номера спиц</label>
       </div>
-    </div>
+  </section>
 
-    <div class="card">
+  <section class="card results-card">
       <h2>Что делать</h2>
       <div id="summary" class="summary"></div>
       <div class="table-wrap">
@@ -217,9 +223,7 @@
         </table>
       </div>
       <div class="note">Значения ориентировочные: правьте небольшими шагами (1/4–1/2 оборота), затем измеряйте заново и повторяйте. Держите натяжение в разумных пределах — не ослабляйте спицы до «болтания».</div>
-    </div>
-
-  </aside>
+  </section>
 
   <details class="card howto span-all">
     <summary>Как пользоваться / методика</summary>
